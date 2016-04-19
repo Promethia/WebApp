@@ -24,11 +24,26 @@ $app = new Illuminate\Foundation\Application;
 |
 */
 
-$env = $app->detectEnvironment(array(
+$env = $app->detectEnvironment(function()
+{
 
-	'local' => array('homestead'),
+	if(isset($_SERVER['HTTP_HOST']))
+	{
 
-));
+		$host = $_SERVER['HTTP_HOST'];
+
+		if ($host == 'dev.promethiamc.net')
+		{
+			
+			return 'dev';
+
+		}
+
+	}
+
+	return 'production';
+
+});
 
 /*
 |--------------------------------------------------------------------------
